@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Monitoring Realtime Panel Surya</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #fdfbfb, #ebedee);
+      text-align: center;
+      padding: 40px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #data-box {
+      background-color: #ffffff;
+      padding: 25px;
+      margin: 30px auto;
+      border-radius: 12px;
+      max-width: 650px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      font-size: 20px;
+      color: #222;
+    }
+
+    button {
+      padding: 12px 28px;
+      font-size: 16px;
+      margin-top: 20px;
+      background-color: #1565c0;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0d47a1;
+    }
+
+    footer {
+      margin-top: 60px;
+      color: #777;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Monitoring Sistem Tracking Realtime</h1>
+
+  <div id="data-box">Memuat data terbaru...</div>
+
+  <button onclick="downloadCSV()">Download Riwayat (CSV)</button>
+
+  <footer>&copy; 2025 monitoring Solar Tracker | PetrianaRipki</footer>
+
+  <script>
+    function fetchData() {
+      fetch('simpan.php')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('data-box').textContent = data || 'Belum ada data';
+        })
+        .catch(() => {
+          document.getElementById('data-box').textContent = 'Gagal memuat data';
+        });
+    }
+
+    function downloadCSV() {
+      window.location.href = 'simpan.php?download=true';
+    }
+
+    // Ambil data setiap detik
+    setInterval(fetchData, 1000);
+    fetchData();
+  </script>
+
+</body>
+</html>
